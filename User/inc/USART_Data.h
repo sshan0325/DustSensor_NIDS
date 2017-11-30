@@ -7,7 +7,7 @@
 #define TRUE            1
 #define FALSE           0
 
-#define MYID            3
+#define MYID            2
 
 void MakeTxData(uint8_t ucValidInput);
 void Send485Data(void);
@@ -15,3 +15,4 @@ int rs485_dir(int rx);
 void SensorDataProcess(void);
 void RS485DataProcess(void);
 void RequestNextNode(void);
+void RS485InputProcess(void);

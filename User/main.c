@@ -8,8 +8,7 @@
 extern uint8_t aTxBuffer[];
 extern uint8_t aRxBuffer[];
 extern unsigned char Rx_Compli_Flag;
-extern unsigned char Rx_Count;
-extern unsigned char Tx_Count;
+extern unsigned char Rx_SensorData_Count;
 extern unsigned char Tx_Count_485;
 extern uint8_t aRxBuffer [BUFFERSIZE];
 extern unsigned char Tx_Flag;
@@ -30,7 +29,7 @@ void main(void)
     tmp++;
     if(tmp%100000==0)
     {
-       GPIO_ToggleBits(GPIOA, LED4_PIN);
+       //GPIO_ToggleBits(GPIOA, LED4_PIN);
     }
     /////////////////////////////////////////////////////////////
 
@@ -38,6 +37,7 @@ void main(void)
     
     //////////// DUST Sensor Data Read & 485 Tx//////////////////
     SensorDataProcess();
+    RS485InputProcess();
     RS485DataProcess();
     /////////////////////////////////////////////////////////////
   }

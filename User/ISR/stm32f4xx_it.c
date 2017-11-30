@@ -33,6 +33,7 @@
 #include "LED_Con.h"
 #include "main.h"
 #include "stm32f4xx_conf.h"    
+#include "USART_Data.h"
 
 /** @addtogroup STM32F4xx_StdPeriph_Examples
   * @{
@@ -57,14 +58,16 @@ extern __IO uint8_t ubUsartMode;                //?
 
 extern int timecheck;
 extern int timecheck_485;
+
 unsigned char Rx_Compli_Flag = RESET;
 unsigned char Rx_Compli_Flag_485 = RESET;
 unsigned char Tx_Flag = RESET;
 unsigned char Tx_Flag_485 = RESET;
-unsigned char Rx_Count = 0 ;
+unsigned char Rx_SensorData_Count = 0 ;
 unsigned char Rx_Count_485 = 0 ;
-unsigned char Tx_Count =0 ;
 unsigned char Tx_Count_485 =0 ;
+unsigned char NextID=0;
+unsigned char MyIdIdFirst=1;
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -192,54 +195,32 @@ void USART2_IRQHandler(void)
     Rx_Count_485++;        
     Rx_Compli_Flag_485 = SET ; 
     timecheck_485 =0;
-#if 0    
-    aRxBuffer_485[Rx_Count] = USART_ReceiveData(USART2);	
-    Rx_Count_485++;        
-    Rx_Compli_Flag_485 = SET ; 
-    timecheck_485=0;
-    if (aRxBuffer_485[Rx_Count_485] == 0x01)
-    {GPIO_ToggleBits(GPIOA, LED2_PIN);}
-#endif     
-
-
   } 
   
-#if 0
-  uint16_t tmp=0;
-  /* USART in Transmitter mode */
-  if (/*USART_GetITStatus(USART6, USART_IT_TXE) == SET &&*/ Tx_Flag_485==SET)
+#if 0  
+  ////////////   Next Device Call Address    //////////////////////
+  if ( (aRxBuffer_485[2] > MYID) && (aRxBuffer_485[2] < NextID) )
   {
-    if (Tx_Count_485< BUFFERSIZE)
-    {
-      /* Send Transaction data */
-      rs485_dir(1);  
-      while(tmp<50)
-      {
-        tmp++;
-      }      
-      USART_SendData(USART2, aTxBuffer[8-Tx_Count_485]);
-      rs485_dir(0);
-      Tx_Count_485--;
-      if(Tx_Count_485==0)
-      {
-        Tx_Flag_485=RESET;
-      }
-    }
-    else
-    {
-      /* Disable the Tx buffer empty interrupt */
-      USART_ITConfig(USART2, USART_IT_TXE, DISABLE);
-    }
-  } 
+    NextID = aRxBuffer_485[4];
+  }
+  
+  ////////////   Check My ID is First    //////////////////////
+  if ( (aRxBuffer_485[2] < MYID) )
+  {
+    MyIdIdFirst = 0;
+  }
 #endif  
 }
 void USART6_IRQHandler(void)
 {
   if (USART_GetITStatus(USART6, USART_IT_RXNE) == SET)
   {
-    aRxBuffer[Rx_Count] = USART_ReceiveData(USART6);	
-    Rx_Count++;        
-    Rx_Compli_Flag = SET ; 
+    aRxBuffer[Rx_SensorData_Count] = USART_ReceiveData(USART6);	
+    Rx_SensorData_Count++; 
+    if (Rx_SensorData_Count>7)
+    {
+      Rx_Compli_Flag = SET ; 
+    }
     timecheck =0;
   } 
 }
