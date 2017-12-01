@@ -65,7 +65,7 @@ unsigned char Rx_SensorData_Count = 0 ;
 unsigned char Rx_Count_485 = 0 ;
 unsigned char Tx_Count_485 =0 ;
 unsigned char NextID=127;
-unsigned char MyIdIsFirst=1;
+unsigned char MyIdIsFirst=TRUE;
 unsigned int RS485DataSavePosition=0;
 
 /* Private function prototypes -----------------------------------------------*/

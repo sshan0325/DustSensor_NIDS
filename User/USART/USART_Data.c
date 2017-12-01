@@ -28,6 +28,8 @@ int ForcedTxDne=FALSE;
 int ForcedTxTimer=0;
 int Rx485DataPosition=0;
 int Rx485ValidDataPosition=0;
+int AckWatingCount=0;
+int AckReceived=FALSE;
 
 
 void MakeTxData(uint8_t ucValidInput)
@@ -149,6 +151,10 @@ void RequestNextNode(void)
   Tx_Count_485=8;  
   Tx_Flag_485=SET;
   Send485Data();  
+  GPIO_ToggleBits(GPIOA, LED1_PIN);
+  AckWatingCount++;
+  if (AckWatingCount>5)
+    NextID=127;
 }
 
 /******************************************************************************/
@@ -198,15 +204,10 @@ void RS485DataProcess(void)
   /////////////////////////////////////////////////////////////////////////////////////////
   if( ((SensorDataValid == TRUE) && (MyIdIsFirst==TRUE)) || (CalledID==TRUE) )
   {
-#if 0    
-    GPIO_ToggleBits(GPIOA, LED3_PIN);   
-
-    if( ((SensorDataValid == TRUE) && (MyIdIsFirst==TRUE)))
-      GPIO_ToggleBits(GPIOA, LED1_PIN);   
-    if(CalledID==TRUE) 
-      GPIO_ToggleBits(GPIOA, LED2_PIN);   
-#endif 
-
+    if (MyIdIsFirst==TRUE)
+    {
+      GPIO_ToggleBits(GPIOA, LED4_PIN);
+    }
     if(CalledID==TRUE) 
     {
       for(tmp=0; tmp<350000; tmp++) {}
@@ -235,10 +236,12 @@ void RS485DataProcess(void)
     RequestNextNode();
   } 
   
-  else if(timecheck>5000000 )  // 센서 데이터 없음
+  else if(timecheck>5000000 )
   {
     timecheck =0;
     
+    MyIdIsFirst=TRUE;
+      
     if (SensorDataValid==TRUE)
       MakeTxData(TRUE);
     else
@@ -286,6 +289,7 @@ void SensorDataProcess(void)
     Rx_SensorData_Count = 0;
     Send485Data();  
     timecheck =0;
+    MyIdIsFirst=TRUE;
   }
 
 
@@ -327,7 +331,6 @@ void RS485InputProcess(void)
   {
     if((aRxBuffer_485[Rx485DataPosition]==0xAA) && (aRxBuffer_485[Rx485DataPosition+1]==0x00) )
     {
-      GPIO_ToggleBits(GPIOA, LED1_PIN);
       if ( (aRxBuffer_485[Rx485DataPosition+2]<MYID) )
         MyIdIsFirst = 0;
 
@@ -341,7 +344,6 @@ void RS485InputProcess(void)
     }
     else if( (aRxBuffer_485[Rx485DataPosition] == 0x55)  && (aRxBuffer_485[Rx485DataPosition+1] == 0x00) )
     {
-      GPIO_ToggleBits(GPIOA, LED2_PIN);
       if (aRxBuffer_485[Rx485DataPosition+2] == MYID)
       {
         Rx485ValidDataPosition=Rx485DataPosition;
@@ -355,9 +357,23 @@ void RS485InputProcess(void)
       if (Rx485DataPosition>=BUFFERSIZE)
         Rx485DataPosition=0;
     }
+    else if( (aRxBuffer_485[Rx485DataPosition] == 0x55)  && (aRxBuffer_485[Rx485DataPosition+1] == 0x55) )
+    {
+      if (aRxBuffer_485[Rx485DataPosition+2] == MYID)
+      {
+        GPIO_ToggleBits(GPIOA, LED2_PIN);
+        AckReceived=TRUE;
+        AckWatingCount=0;
+      }
+      
+      Rx485DataPosition+=8;
+      Rx_Count_485-=8;      
+      
+      if (Rx485DataPosition>=BUFFERSIZE)
+        Rx485DataPosition=0;
+    }    
     else 
     {
-      GPIO_ToggleBits(GPIOA, LED3_PIN);
       Rx485DataPosition++;
       Rx_Count_485--;
       if (Rx485DataPosition>=BUFFERSIZE)
