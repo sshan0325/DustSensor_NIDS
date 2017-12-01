@@ -19,22 +19,10 @@ static __IO uint32_t TimingDelay;
 
 void main(void)
 {
-  uint16_t tmp=0;
-    
   SYsInit();
   
   while(1)
   {
-    //////////// LED Toggle for System Check /////////////////////
-    tmp++;
-    if(tmp%100000==0)
-    {
-       //GPIO_ToggleBits(GPIOA, LED4_PIN);
-    }
-    /////////////////////////////////////////////////////////////
-
-
-    
     //////////// DUST Sensor Data Read & 485 Tx//////////////////
     SensorDataProcess();
     RS485InputProcess();

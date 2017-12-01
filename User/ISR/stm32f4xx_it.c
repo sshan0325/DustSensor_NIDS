@@ -57,17 +57,16 @@ extern __IO uint8_t ubUsartTransactionType;     //?
 extern __IO uint8_t ubUsartMode;                //?
 
 extern int timecheck;
-extern int timecheck_485;
 
 unsigned char Rx_Compli_Flag = RESET;
-unsigned char Rx_Compli_Flag_485 = RESET;
 unsigned char Tx_Flag = RESET;
 unsigned char Tx_Flag_485 = RESET;
 unsigned char Rx_SensorData_Count = 0 ;
 unsigned char Rx_Count_485 = 0 ;
 unsigned char Tx_Count_485 =0 ;
-unsigned char NextID=0;
-unsigned char MyIdIdFirst=1;
+unsigned char NextID=127;
+unsigned char MyIdIsFirst=1;
+unsigned int RS485DataSavePosition=0;
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -191,25 +190,13 @@ void USART2_IRQHandler(void)
   /* USART in Recirve mode */  
   if (USART_GetITStatus(USART2, USART_IT_RXNE) == SET)
   {
-    aRxBuffer_485[Rx_Count_485] = USART_ReceiveData(USART2);	
-    Rx_Count_485++;        
-    Rx_Compli_Flag_485 = SET ; 
-    timecheck_485 =0;
+    aRxBuffer_485[RS485DataSavePosition] = USART_ReceiveData(USART2);	
+    Rx_Count_485++;  
+    RS485DataSavePosition++;
+    
+    if(RS485DataSavePosition>=BUFFERSIZE)
+      RS485DataSavePosition=0;
   } 
-  
-#if 0  
-  ////////////   Next Device Call Address    //////////////////////
-  if ( (aRxBuffer_485[2] > MYID) && (aRxBuffer_485[2] < NextID) )
-  {
-    NextID = aRxBuffer_485[4];
-  }
-  
-  ////////////   Check My ID is First    //////////////////////
-  if ( (aRxBuffer_485[2] < MYID) )
-  {
-    MyIdIdFirst = 0;
-  }
-#endif  
 }
 void USART6_IRQHandler(void)
 {

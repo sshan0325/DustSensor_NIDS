@@ -7,7 +7,7 @@ extern uint8_t aTxBuffer[];
 extern uint8_t aRxBuffer[];
 extern uint8_t aRxBuffer_485[];
 extern unsigned char Rx_Compli_Flag;
-extern unsigned char Rx_Compli_Flag_485;
+extern unsigned char Rx_SensorData_Count;
 extern unsigned char Rx_SensorData_Count;
 extern unsigned char Rx_Count_485;
 
@@ -16,16 +16,18 @@ extern uint8_t aRxBuffer [BUFFERSIZE];
 extern unsigned char Tx_Flag;
 extern unsigned char Tx_Flag_485;
 extern unsigned char NextID;
-extern unsigned char MyIdIdFirst;
+extern unsigned char MyIdIsFirst;
 
 
 int timecheck=0;
-int timecheck_485=0;
 int SensorDataValid=FALSE;
-int IsMyTurn=FALSE;
-int CalledID=0;
+int CalledID=FALSE;
+int CalledByID=0;
+int CurrentID=0;
 int ForcedTxDne=FALSE;
 int ForcedTxTimer=0;
+int Rx485DataPosition=0;
+int Rx485ValidDataPosition=0;
 
 
 void MakeTxData(uint8_t ucValidInput)
@@ -41,6 +43,7 @@ void MakeTxData(uint8_t ucValidInput)
       aTxBuffer[uiTxDataCount]=aRxBuffer[uiTxDataCount+DATAPOSITION];
     }
   }
+#if 1
   else
   {
     aTxBuffer[3]=0xFF;
@@ -48,6 +51,15 @@ void MakeTxData(uint8_t ucValidInput)
     aTxBuffer[5]=0xFF;
     aTxBuffer[6]=0xFF;    
   }
+#else
+  else
+  {
+    for (uiTxDataCount=0; uiTxDataCount<=7 ; uiTxDataCount++)
+    {
+      aTxBuffer[uiTxDataCount]=aRxBuffer_485[Rx485DataPosition-8+uiTxDataCount];
+    }   
+  }  
+#endif
 
   aTxBuffer[1]=0x00; 
   aTxBuffer[2]=MYID; 
@@ -122,9 +134,9 @@ void RequestNextNode(void)
 
   aTxBuffer[0]=0x55; 
   aTxBuffer[1]=0x00; 
-  aTxBuffer[2]=MYID;   
+  aTxBuffer[2]=NextID;   
   aTxBuffer[3]=0x00;
-  aTxBuffer[4]=NextID;
+  aTxBuffer[4]=MYID;
   aTxBuffer[5]=0xFF;
   aTxBuffer[6]=0xFF;        
 
@@ -137,9 +149,39 @@ void RequestNextNode(void)
   Tx_Count_485=8;  
   Tx_Flag_485=SET;
   Send485Data();  
-    
-  GPIO_ToggleBits(GPIOA, LED4_PIN);
 }
+
+/******************************************************************************/
+/*** @brief  RS-485 Data Rx/Tx Propcess                                                     ***/
+/*** @param  None                                                                                     ***/
+/*** @retval None                                                                                       ***/
+/*****************************************************************************/
+void SENDACK(void)
+{
+  uint8_t Crc=0;  
+  uint8_t uiTxDataCount;
+
+  aTxBuffer[0]=0x55; 
+  aTxBuffer[1]=0x55; 
+  aTxBuffer[2]=CalledByID;   
+  aTxBuffer[3]=0x00;
+  aTxBuffer[4]=MYID;
+  aTxBuffer[5]=0xFF;
+  aTxBuffer[6]=0xFF;        
+
+  for(uiTxDataCount=0 ; uiTxDataCount<7 ; uiTxDataCount++)
+  {
+    Crc=Crc+aTxBuffer[uiTxDataCount];
+  }  
+  aTxBuffer[7]=Crc;
+  
+  Tx_Count_485=8;  
+  Tx_Flag_485=SET;
+  Send485Data();    
+  
+  CalledByID=0;
+}
+
 
 /******************************************************************************/
 /*** @brief  RS-485 Data Rx/Tx Propcess                                                     ***/
@@ -149,57 +191,70 @@ void RequestNextNode(void)
 void RS485DataProcess(void)
 {
   int tmp;
-  timecheck_485++;
-
-  CalledID=aRxBuffer_485[4];
-
+  
   /////////////////////////// 수신 센서 데이터 -> RS-485  Tx ////////////////////////
   // ForcedTxDne == TRUE : 센서로부터 정상데이터가 들어온 상태로, Tx 대기 상태//
   // 일정 시간 내에 자신에게 Pool이 수신되지 않으면 강제 Rx 수행              //
   /////////////////////////////////////////////////////////////////////////////////////////
-  if( (SensorDataValid == TRUE) && (Rx_SensorData_Count >6)  )
+  if( ((SensorDataValid == TRUE) && (MyIdIsFirst==TRUE)) || (CalledID==TRUE) )
   {
-    if (CalledID==MYID  || MyIdIdFirst==TRUE)
-    {
+#if 0    
+    GPIO_ToggleBits(GPIOA, LED3_PIN);   
 
-      ForcedTxTimer=0;
-      ForcedTxDne=TRUE;
-      for(tmp=0; tmp<3000; tmp++) {}
+    if( ((SensorDataValid == TRUE) && (MyIdIsFirst==TRUE)))
+      GPIO_ToggleBits(GPIOA, LED1_PIN);   
+    if(CalledID==TRUE) 
+      GPIO_ToggleBits(GPIOA, LED2_PIN);   
+#endif 
+
+    if(CalledID==TRUE) 
+    {
+      for(tmp=0; tmp<350000; tmp++) {}
+      SENDACK();
+    }
       
-      Rx_SensorData_Count = 0;   
+    CalledID=FALSE;
+    ForcedTxTimer=0;
+    ForcedTxDne=TRUE;
+    for(tmp=0; tmp<350000; tmp++) {}
+
+    if (SensorDataValid==TRUE)
       MakeTxData(TRUE);
-      Tx_Flag_485=SET;
-      Send485Data();
-      timecheck =0;
-      SensorDataValid=FALSE;
-      
-      GPIO_ToggleBits(GPIOA, LED3_PIN);    
-      
-//      if (NextID > MYID)
-//      {
-        NextID=2;
-        for(tmp=0; tmp<300000; tmp++) {}
-        MakeTxData(TRUE);
-        Tx_Flag_485=SET;      
-        RequestNextNode();
-//      }
-
-    }
     else
-    {
-    }
-  } 
-  else if(Rx_Compli_Flag == RESET && timecheck>3000000)  // 센서 데이터 없음
-  {
-    timecheck =0;
-    MakeTxData(FALSE);
+      MakeTxData(FALSE);
+    
     Tx_Flag_485=SET;
     Send485Data();
-    GPIO_ToggleBits(GPIOA, LED3_PIN);     
+    Rx_SensorData_Count = 0;
+    timecheck =0;
+    SensorDataValid=FALSE;
+
+
+    for(tmp=0; tmp<350000; tmp++) {}
+    Tx_Flag_485=SET;      
+    RequestNextNode();
+  } 
+  
+  else if(timecheck>5000000 )  // 센서 데이터 없음
+  {
+    timecheck =0;
+    
+    if (SensorDataValid==TRUE)
+      MakeTxData(TRUE);
+    else
+      MakeTxData(FALSE);
+    
+    Tx_Flag_485=SET;
+    Send485Data();
+    Rx_SensorData_Count = 0;
+    
+    for(tmp=0; tmp<350000; tmp++) {}
+    Tx_Flag_485=SET;      
+    RequestNextNode();    
   }  
+  
   else
   {
-   
   }
 
 }
@@ -221,18 +276,18 @@ void SensorDataProcess(void)
   {
     ForcedTxTimer++;
   }
-#if 0 
-  if (ForcedTxTimer>(400000+(MYID*20000)))
+
+  if (ForcedTxTimer>(6000000) )
   {
     ForcedTxTimer=0;
     ForcedTxDne=TRUE;
-    Rx_SensorData_Count = 0;   
     MakeTxData(TRUE);
     Tx_Flag_485=SET;
+    Rx_SensorData_Count = 0;
     Send485Data();  
     timecheck =0;
   }
-#endif  
+
 
   ////////// 정상 센서 데이터 수신 확인, RS-485 TX Trigger//////////////////////
   // ForcedTxDne = TRUE 강제 전송이 가능하도록 설정                              //
@@ -246,13 +301,10 @@ void SensorDataProcess(void)
       {      
         SensorDataValid=TRUE;
         ForcedTxDne=FALSE;
-        GPIO_ToggleBits(GPIOA, LED1_PIN);         
       }
       else  // 비정상 데이터 -> 버림
       {
-        Rx_SensorData_Count=0;
         Rx_Compli_Flag=RESET;
-        GPIO_ToggleBits(GPIOA, LED2_PIN);    
       }
       Rx_Compli_Flag=RESET;
   }
@@ -271,24 +323,46 @@ void SensorDataProcess(void)
 /*****************************************************************************/
 void RS485InputProcess(void)
 {
-  timecheck_485++;
+  while(Rx_Count_485>=8)
+  {
+    if((aRxBuffer_485[Rx485DataPosition]==0xAA) && (aRxBuffer_485[Rx485DataPosition+1]==0x00) )
+    {
+      GPIO_ToggleBits(GPIOA, LED1_PIN);
+      if ( (aRxBuffer_485[Rx485DataPosition+2]<MYID) )
+        MyIdIsFirst = 0;
 
-  if(Rx_Compli_Flag_485 == SET && timecheck_485>100000)
-  {
-      Rx_Count_485=0;
-      Rx_Compli_Flag_485=RESET;
+      if ( (aRxBuffer_485[Rx485DataPosition+2]<NextID) && (aRxBuffer_485[Rx485DataPosition+2]>MYID) )
+        NextID=aRxBuffer_485[Rx485DataPosition+2];
       
-      if(aRxBuffer_485[0]==0x55 && aRxBuffer_485[1]==0x00)
+      Rx485DataPosition+=8;
+      Rx_Count_485-=8;      
+      if (Rx485DataPosition>=BUFFERSIZE)
+        Rx485DataPosition=0;      
+    }
+    else if( (aRxBuffer_485[Rx485DataPosition] == 0x55)  && (aRxBuffer_485[Rx485DataPosition+1] == 0x00) )
+    {
+      GPIO_ToggleBits(GPIOA, LED2_PIN);
+      if (aRxBuffer_485[Rx485DataPosition+2] == MYID)
       {
-        GPIO_ToggleBits(GPIOA, LED1_PIN);    
+        Rx485ValidDataPosition=Rx485DataPosition;
+        CalledID=TRUE;
+        CalledByID=aRxBuffer_485[Rx485DataPosition+4];
       }
-      if(aRxBuffer_485[4]==0x02 )
-      {
-        GPIO_ToggleBits(GPIOA, LED2_PIN);    
-      }
-  }
-  else  //함수 커버리지
-  {
+      
+      Rx485DataPosition+=8;
+      Rx_Count_485-=8;      
+      
+      if (Rx485DataPosition>=BUFFERSIZE)
+        Rx485DataPosition=0;
+    }
+    else 
+    {
+      GPIO_ToggleBits(GPIOA, LED3_PIN);
+      Rx485DataPosition++;
+      Rx_Count_485--;
+      if (Rx485DataPosition>=BUFFERSIZE)
+        Rx485DataPosition=0;
+    }
   }
   ////////////////////////////////////////////////////////////////////////////////////  
 }
