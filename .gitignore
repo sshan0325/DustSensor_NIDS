@@ -1,0 +1,12 @@
+*.bin
+*.out
+*.pbd
+*.browse
+*.cout
+*.o
+*.pbi
+*.dep
+*.ewp
+*.ewt
+*.wsdt
+*.wspos
