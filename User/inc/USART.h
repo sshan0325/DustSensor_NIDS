@@ -14,7 +14,7 @@ typedef enum {FAILED = 0, PASSED = !FAILED} TestStatus;
 /* Uncomment the line below if you will use the USART in Receiver Mode */
 #define USART_RECEIVER 
 
-#define BUFFERSIZE                     100
+#define BUFFERSIZE                     512
 
 /* Private function prototypes -----------------------------------------------*/
 
