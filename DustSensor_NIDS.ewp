@@ -1997,6 +1997,9 @@
         <name>$PROJ_DIR$\User\inc\stm32f4xx_exti.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\User\inc\stm32f4xx_hal_conf.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\User\inc\stm32f4xx_it.h</name>
       </file>
       <file>
