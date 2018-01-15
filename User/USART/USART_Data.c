@@ -29,7 +29,12 @@ int ForcedTxTimer=0;
 int Rx485DataPosition=0;
 int Rx485ValidDataPosition=0;
 int AckWatingCount=0;
-int AckReceived=FALSE;
+int NetworkLinked=FALSE;
+
+unsigned int SensedValue[3][2];
+unsigned int SensedCount=0;
+unsigned int SensedAverageValue[2];
+
 
 
 void MakeTxData(uint8_t ucValidInput)
@@ -132,7 +137,7 @@ int rs485_dir(int rx)
 void RequestNextNode(void)
 {
   uint8_t Crc=0;  
-  uint8_t uiTxDataCount;
+  uint8_t uiTxDataCountForNextNodeCall;
 
   aTxBuffer[0]=0x55; 
   aTxBuffer[1]=0x00; 
@@ -142,9 +147,9 @@ void RequestNextNode(void)
   aTxBuffer[5]=0xFF;
   aTxBuffer[6]=0xFF;        
 
-  for(uiTxDataCount=0 ; uiTxDataCount<7 ; uiTxDataCount++)
+  for(uiTxDataCountForNextNodeCall=0 ; uiTxDataCountForNextNodeCall<7 ; uiTxDataCountForNextNodeCall++)
   {
-    Crc=Crc+aTxBuffer[uiTxDataCount];
+    Crc=Crc+aTxBuffer[uiTxDataCountForNextNodeCall];
   }  
   aTxBuffer[7]=Crc;
   
@@ -152,6 +157,7 @@ void RequestNextNode(void)
   Tx_Flag_485=SET;
   Send485Data();  
   GPIO_ToggleBits(GPIOA, LED1_PIN);
+  
   AckWatingCount++;
   if (AckWatingCount>5)
     NextID=127;
@@ -165,7 +171,7 @@ void RequestNextNode(void)
 void SENDACK(void)
 {
   uint8_t Crc=0;  
-  uint8_t uiTxDataCount;
+  uint8_t uiTxDataCountForSendACK;
 
   aTxBuffer[0]=0x55; 
   aTxBuffer[1]=0x55; 
@@ -175,9 +181,9 @@ void SENDACK(void)
   aTxBuffer[5]=0xFF;
   aTxBuffer[6]=0xFF;        
 
-  for(uiTxDataCount=0 ; uiTxDataCount<7 ; uiTxDataCount++)
+  for(uiTxDataCountForSendACK=0 ; uiTxDataCountForSendACK<7 ; uiTxDataCountForSendACK++)
   {
-    Crc=Crc+aTxBuffer[uiTxDataCount];
+    Crc=Crc+aTxBuffer[uiTxDataCountForSendACK];
   }  
   aTxBuffer[7]=Crc;
   
@@ -217,15 +223,23 @@ void RS485DataProcess(void)
     CalledID=FALSE;
     ForcedTxTimer=0;
     ForcedTxDne=TRUE;
-    for(tmp=0; tmp<350000; tmp++) {}
+    for(tmp=0; tmp<450000; tmp++) {}
+    
+    for(tmp=0; tmp<250000; tmp++) {}
 
     if (SensorDataValid==TRUE)
+    {
       MakeTxData(TRUE);
+      Tx_Flag_485=SET;
+      Send485Data();      
+    }
     else
-      MakeTxData(FALSE);
+    {
+      //MakeTxData(FALSE);
+      MakeTxData(TRUE);
+    }
     
-    Tx_Flag_485=SET;
-    Send485Data();
+
     Rx_SensorData_Count = 0;
     timecheck =0;
     SensorDataValid=FALSE;
@@ -235,8 +249,8 @@ void RS485DataProcess(void)
     Tx_Flag_485=SET;      
     RequestNextNode();
   } 
-  
-  else if(timecheck>5000000 )
+
+  else if(timecheck>(5000000+(50000*MYID))  )
   {
     timecheck =0;
     
@@ -270,28 +284,6 @@ void RS485DataProcess(void)
 void SensorDataProcess(void)
 {
   timecheck++;
-  
-  ////////////////////////////////////// ForcedTxDne //////////////////////////////////////
-  // ForcedTxDne == TRUE : 센서로부터 정상데이터가 들어온 상태로, Tx 대기 상태//
-  // 일정 시간 내에 자신에게 Pool이 수신되지 않으면 강제 Rx 수행                        //
-  ////////////////////////////////////////////////////////////////////////////////////////////
-  if (ForcedTxDne==FALSE)        
-  {
-    ForcedTxTimer++;
-  }
-
-  if (ForcedTxTimer>(6000000) )
-  {
-    ForcedTxTimer=0;
-    ForcedTxDne=TRUE;
-    MakeTxData(TRUE);
-    Tx_Flag_485=SET;
-    Rx_SensorData_Count = 0;
-    Send485Data();  
-    timecheck =0;
-    MyIdIsFirst=TRUE;
-  }
-
 
   ////////// 정상 센서 데이터 수신 확인, RS-485 TX Trigger//////////////////////
   // ForcedTxDne = TRUE 강제 전송이 가능하도록 설정                              //
@@ -300,11 +292,36 @@ void SensorDataProcess(void)
   ////////////////////////////////////////////////////////////////////////////////////  
   if(Rx_Compli_Flag == SET && timecheck>100000)
   {
-      if(aRxBuffer[0]==0xAA && aRxBuffer[1]==0xAA         // 정상 데이터 확인
+      if(aRxBuffer[0]==0xAA && aRxBuffer[1]==0xAA         // 정상 데이터 여부 확인
          && aRxBuffer[2]==0x53 && aRxBuffer[3]==0x52)
-      {      
-        SensorDataValid=TRUE;
-        ForcedTxDne=FALSE;
+      {
+        if (SensedCount == 0)
+        {
+          SensedCount=1;
+          SensedValue[0][0] = (aRxBuffer[12]*256) + aRxBuffer[13];              //첫번째 PM2.5 센싱 데이터
+          SensedValue[0][1] = (aRxBuffer[14]*256) + aRxBuffer[15];              //첫번째 PM10 센싱 데이터
+        }
+        
+        else if  (SensedCount == 1)
+        {
+          SensedCount=0;
+          SensedValue[1][0] = (aRxBuffer[12]*256) + aRxBuffer[13];              //두번째 PM2.5 센싱 데이터
+          SensedValue[1][1] = (aRxBuffer[14]*256) + aRxBuffer[15];              //두번째 PM10 센싱 데이터          
+          
+          SensedAverageValue[0]=(SensedValue[0][0]+SensedValue[1][0]) / 2;      //PM2.5 센싱 데이터 평균
+          SensedAverageValue[1]=(SensedValue[0][1]+SensedValue[1][1]) / 2;      //PM10 센싱 데이터 평균
+          
+          SensorDataValid=TRUE;
+          aRxBuffer[12]= SensedAverageValue[0]/256;
+          aRxBuffer[13]= SensedAverageValue[0]%256;
+          aRxBuffer[14]= SensedAverageValue[1]/256;
+          aRxBuffer[15]= SensedAverageValue[1]%256;
+            
+        }
+        else
+        {
+          SensedCount=0;
+        }
       }
       else  // 비정상 데이터 -> 버림
       {
@@ -349,11 +366,11 @@ void RS485InputProcess(void)
         Rx485ValidDataPosition=Rx485DataPosition;
         CalledID=TRUE;
         CalledByID=aRxBuffer_485[Rx485DataPosition+4];
+        NetworkLinked=TRUE;
       }
       
       Rx485DataPosition+=8;
       Rx_Count_485-=8;      
-      
       if (Rx485DataPosition>=BUFFERSIZE)
         Rx485DataPosition=0;
     }
@@ -362,13 +379,11 @@ void RS485InputProcess(void)
       if (aRxBuffer_485[Rx485DataPosition+2] == MYID)
       {
         GPIO_ToggleBits(GPIOA, LED2_PIN);
-        AckReceived=TRUE;
         AckWatingCount=0;
       }
       
       Rx485DataPosition+=8;
       Rx_Count_485-=8;      
-      
       if (Rx485DataPosition>=BUFFERSIZE)
         Rx485DataPosition=0;
     }    
