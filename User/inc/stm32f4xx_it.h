@@ -54,6 +54,7 @@ void SysTick_Handler(void);
 void USARTx_IRQHandler(void);
 void USART6_IRQHandler(void);
 void USART2_IRQHandler(void);
+void USART1_IRQHandler(void);
 
 #endif /* __STM32F4xx_IT_H */
 

@@ -185,6 +185,16 @@ void SysTick_Handler(void)
 * @param  None
 * @retval None
 */
+
+void USART1_IRQHandler(void)
+{
+	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
+	{
+		USART_ClearITPendingBit(USART1, USART_IT_RXNE);
+		//enqueue(&Uart1RxQueue, USART_ReceiveData(USART1));
+	}
+}
+
 void USART2_IRQHandler(void)
 {
   /* USART in Recirve mode */  

@@ -26,6 +26,7 @@ static TestStatus Buffercmp(uint8_t *pBuffer1, uint8_t *pBuffer2, uint16_t Buffe
 /* Private functions ---------------------------------------------------------*/
 void USART6_Config(void);
 void USART2_Config(void);
+void USART1_Config(int baudrate);
 void SysTickConfig(void);
 static TestStatus Buffercmp(uint8_t* pBuffer1, uint8_t* pBuffer2, uint16_t BufferLength);
 void assert_failed(uint8_t* file, uint32_t line);
