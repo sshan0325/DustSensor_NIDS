@@ -53,7 +53,7 @@ void main(void)
     {
       temp=0;
       GPIO_ToggleBits(GPIOA, LED3_PIN);
-      printf ("AAAA");      
+      printf ("AAAA\r\n");      
     }    
   }
   
