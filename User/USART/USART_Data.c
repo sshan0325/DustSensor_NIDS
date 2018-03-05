@@ -151,7 +151,7 @@ void RequestNextNode(void)
   Tx_Count_485=8;  
   Tx_Flag_485=SET;
   Send485Data();  
-  GPIO_ToggleBits(GPIOA, LED1_PIN);
+  //GPIO_ToggleBits(GPIOA, LED1_PIN);
   AckWatingCount++;
   if (AckWatingCount>5)
     NextID=127;
@@ -206,7 +206,7 @@ void RS485DataProcess(void)
   {
     if (MyIdIsFirst==TRUE)
     {
-      GPIO_ToggleBits(GPIOA, LED4_PIN);
+      //GPIO_ToggleBits(GPIOA, LED4_PIN);
     }
     if(CalledID==TRUE) 
     {
@@ -361,7 +361,7 @@ void RS485InputProcess(void)
     {
       if (aRxBuffer_485[Rx485DataPosition+2] == MYID)
       {
-        GPIO_ToggleBits(GPIOA, LED2_PIN);
+        //GPIO_ToggleBits(GPIOA, LED2_PIN);
         AckReceived=TRUE;
         AckWatingCount=0;
       }

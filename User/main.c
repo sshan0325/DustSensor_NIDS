@@ -6,6 +6,8 @@
 #include "stm32f4xx_wwdg.h"
 #include "stdio.h"
 #include "stm32f4xx.h"
+#include "I2C.h"
+#include "stm32f4xx_i2c.h"
 
 extern uint8_t aTxBuffer[];
 extern uint8_t aRxBuffer[];
@@ -16,6 +18,8 @@ extern uint8_t aRxBuffer [BUFFERSIZE];
 extern unsigned char Tx_Flag;
 extern unsigned char Tx_Flag_485;
 
+//#define SLAVE_ADDRESS 0x5A // the slave address (example)
+#define SLAVE_ADDRESS 0x44 // the slave address (example)
 
 static __IO uint32_t TimingDelay;
 
@@ -39,6 +43,7 @@ void main(void)
 {
   int temp=0;
   SYsInit();
+  uint8_t received_data[9];
   
   while(1)
   {
@@ -49,11 +54,39 @@ void main(void)
     /////////////////////////////////////////////////////////////
     temp++;
     
-    if (temp>1000000)
+    if (temp>2000000)
     {
       temp=0;
-      GPIO_ToggleBits(GPIOA, LED3_PIN);
-      printf ("AAAA\r\n");      
+      GPIO_ToggleBits(GPIOA, LED1_PIN);
+#if 1      
+      I2C_start(I2C1, SLAVE_ADDRESS<<1, I2C_Direction_Transmitter); // start a transmission in Master receiver mode
+      I2C_write(I2C1, 0xE0);
+      I2C_write(I2C1, 0x00);
+      I2C_start(I2C1, SLAVE_ADDRESS<<1, I2C_Direction_Receiver); // start a transmission in Master receiver mode
+      received_data[0] = I2C_read_ack(I2C1); // read one byte and request another byte
+      received_data[1] = I2C_read_ack(I2C1); // read one byte and request another byte
+      received_data[2] = I2C_read_ack(I2C1); // read one byte and request another byte
+      received_data[3] = I2C_read_ack(I2C1); // read one byte and request another byte
+      received_data[4] = I2C_read_ack(I2C1); // read one byte and request another byte
+      received_data[5] = I2C_read_nack(I2C1); // read one byte and request another byte
+      //received_data[6] = I2C_read_ack(I2C1); // read one byte and request another byte
+      //received_data[7] = I2C_read_ack(I2C1); // read one byte and request another byte
+      //received_data[8] = I2C_read_nack(I2C1); // read one byte and don't request another byte, stop transmission      
+      I2C_stop(I2C1);
+      printf ("%d, %d, %d, %d, %d, %d, %d, %d, %d \r\n",received_data[0],received_data[1],received_data[2],received_data[3],received_data[4],received_data[5],received_data[6],received_data[7],received_data[8]);      
+#else
+      I2C_start(I2C2, SLAVE_ADDRESS<<1, I2C_Direction_Receiver); // start a transmission in Master receiver mode
+      received_data[0] = I2C_read_ack(I2C2); // read one byte and request another byte
+      received_data[1] = I2C_read_ack(I2C2); // read one byte and request another byte
+      received_data[2] = I2C_read_ack(I2C2); // read one byte and request another byte
+      received_data[3] = I2C_read_ack(I2C2); // read one byte and request another byte
+      received_data[4] = I2C_read_ack(I2C2); // read one byte and request another byte
+      received_data[5] = I2C_read_nack(I2C2); // read one byte and request another byte
+      received_data[6] = I2C_read_ack(I2C2); // read one byte and request another byte
+      received_data[7] = I2C_read_ack(I2C2); // read one byte and request another byte
+      received_data[8] = I2C_read_nack(I2C2); // read one byte and don't request another byte, stop transmission      
+      printf ("%d, %d, %d, %d, %d, %d, %d, %d, %d \r\n",received_data[0],received_data[1],received_data[2],received_data[3],received_data[4],received_data[5],received_data[6],received_data[7],received_data[8]);      
+#endif      
     }    
   }
   
@@ -67,6 +100,8 @@ void SYsInit(void)
   USART2_Config();
   SysTickConfig();  
   USART1_Config(115200);
+  init_I2C2();
+  init_I2C1();
 }
   
 
