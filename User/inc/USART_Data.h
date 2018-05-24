@@ -7,7 +7,7 @@
 #define TRUE            1
 #define FALSE           0
 
-#define MYID            4
+#define MYID            1
 
 void MakeTxData(uint8_t ucValidInput);
 void Send485Data(void);
