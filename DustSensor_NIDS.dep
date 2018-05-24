@@ -6,44 +6,9 @@
   <configuration>
     <name>Debug</name>
     <outputs>
-      <file>$PROJ_DIR$\Library\CMSIS\Include\core_cm4.h</file>
-      <file>$PROJ_DIR$\Library\CMSIS\Include\core_cmFunc.h</file>
-      <file>$PROJ_DIR$\Library\CMSIS\Include\core_cmInstr.h</file>
-      <file>$PROJ_DIR$\Library\CMSIS\Include\core_cmSimd.h</file>
-      <file>$PROJ_DIR$\Library\CMSIS\stm32f4xx.h</file>
-      <file>$PROJ_DIR$\Library\CMSIS\system_stm32f4xx.h</file>
-      <file>$PROJ_DIR$\Library\CMSIS\startup_stm32f411xe.s</file>
-      <file>$PROJ_DIR$\Library\CMSIS\system_stm32f4xx.c</file>
-      <file>$PROJ_DIR$\Library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h</file>
-      <file>$PROJ_DIR$\Library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c</file>
-      <file>$PROJ_DIR$\Library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h</file>
-      <file>$PROJ_DIR$\Library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c</file>
-      <file>$PROJ_DIR$\User\inc\LED_Con.h</file>
-      <file>$PROJ_DIR$\User\main.h</file>
-      <file>$PROJ_DIR$\User\inc\stm32f4xx_conf.h</file>
-      <file>$PROJ_DIR$\User\inc\stm32f4xx_exti.h</file>
-      <file>$PROJ_DIR$\User\inc\stm32f4xx_it.h</file>
-      <file>$PROJ_DIR$\..\Ref\STM32F4xx_DSP_StdPeriph_Lib_V1.8.0\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_wwdg.h</file>
-      <file>$PROJ_DIR$\User\inc\USART.h</file>
-      <file>$PROJ_DIR$\User\inc\USART_Data.h</file>
-      <file>$PROJ_DIR$\User\ISR\stm32f4xx_it.c</file>
-      <file>$PROJ_DIR$\User\USART\stm32f4xx_usart.c</file>
-      <file>$PROJ_DIR$\User\LED_Control\LED_Con.c</file>
-      <file>$PROJ_DIR$\User\USART\USART.c</file>
-      <file>$PROJ_DIR$\User\USART\USART_Data.c</file>
-      <file>$PROJ_DIR$\User\WWDG\stm32f4xx_wwdg.c</file>
-      <file>$PROJ_DIR$\User\main.c</file>
-      <file>$PROJ_DIR$\User\misc.c</file>
-      <file>$PROJ_DIR$\Debug\Obj\LED_Con.o</file>
-      <file>$TOOLKIT_DIR$\inc\c\intrinsics.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\cmsis_iar.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\stm32f4xx_it.o</file>
       <file>$PROJ_DIR$\Debug\Obj\USART.pbi</file>
-      <file>$PROJ_DIR$\Debug\Exe\DustSensor_NIDS.bin</file>
-      <file>$PROJ_DIR$\User\LED_Control\LED_Con.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\stm32f4xx_rcc.o</file>
       <file>$PROJ_DIR$\Debug\Obj\USART.o</file>
+      <file>$PROJ_DIR$\User\LED_Control\LED_Con.h</file>
       <file>$PROJ_DIR$\Debug\Obj\stm32f4xx_usart.o</file>
       <file>$PROJ_DIR$\Debug\Obj\stm32f4xx_usart.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\stm32f4xx_it.pbi</file>
@@ -80,25 +45,75 @@
       <file>$PROJ_DIR$\Debug\Obj\startup_stm32f411xe.o</file>
       <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
       <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
+      <file>$PROJ_DIR$\Debug\Exe\DustSensor_NIDS.bin</file>
+      <file>$PROJ_DIR$\Debug\Obj\stm32f4xx_rcc.o</file>
+      <file>$PROJ_DIR$\Library\CMSIS\Include\core_cm4.h</file>
+      <file>$PROJ_DIR$\Library\CMSIS\Include\core_cmFunc.h</file>
+      <file>$PROJ_DIR$\Library\CMSIS\Include\core_cmInstr.h</file>
+      <file>$PROJ_DIR$\Library\CMSIS\Include\core_cmSimd.h</file>
+      <file>$PROJ_DIR$\Library\CMSIS\system_stm32f4xx.h</file>
+      <file>$PROJ_DIR$\Library\CMSIS\stm32f4xx.h</file>
+      <file>$PROJ_DIR$\Library\CMSIS\startup_stm32f411xe.s</file>
+      <file>$PROJ_DIR$\Library\CMSIS\system_stm32f4xx.c</file>
+      <file>$PROJ_DIR$\Library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h</file>
+      <file>$PROJ_DIR$\Library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c</file>
+      <file>$PROJ_DIR$\Library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h</file>
+      <file>$PROJ_DIR$\Library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c</file>
+      <file>$PROJ_DIR$\User\inc\LED_Con.h</file>
+      <file>$PROJ_DIR$\User\main.h</file>
+      <file>$PROJ_DIR$\User\inc\stm32f4xx_conf.h</file>
+      <file>$PROJ_DIR$\User\inc\stm32f4xx_exti.h</file>
+      <file>$PROJ_DIR$\User\inc\stm32f4xx_it.h</file>
+      <file>$PROJ_DIR$\..\Ref\STM32F4xx_DSP_StdPeriph_Lib_V1.8.0\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_wwdg.h</file>
+      <file>$PROJ_DIR$\User\inc\USART.h</file>
+      <file>$PROJ_DIR$\User\inc\USART_Data.h</file>
+      <file>$PROJ_DIR$\User\ISR\stm32f4xx_it.c</file>
+      <file>$PROJ_DIR$\User\USART\stm32f4xx_usart.c</file>
+      <file>$PROJ_DIR$\User\LED_Control\LED_Con.c</file>
+      <file>$PROJ_DIR$\User\USART\USART.c</file>
+      <file>$PROJ_DIR$\User\USART\USART_Data.c</file>
+      <file>$PROJ_DIR$\User\WWDG\stm32f4xx_wwdg.c</file>
+      <file>$PROJ_DIR$\User\main.c</file>
+      <file>$PROJ_DIR$\User\misc.c</file>
       <file>$TOOLKIT_DIR$\inc\c\ystdio.h</file>
       <file>$TOOLKIT_DIR$\lib\dl7M_tlf.a</file>
       <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Full.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\cmsis_iar.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\LED_Con.o</file>
+      <file>$TOOLKIT_DIR$\inc\c\intrinsics.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\stm32f4xx_it.o</file>
     </outputs>
     <file>
       <name>[ROOT_NODE]</name>
       <outputs>
         <tool>
           <name>ILINK</name>
-          <file> 57</file>
+          <file> 22</file>
         </tool>
       </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\DustSensor_NIDS.out</name>
+      <outputs>
+        <tool>
+          <name>OBJCOPY</name>
+          <file> 39</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 7 73 14 16 36 18 76 40 3 20 17 1 11 10 25 26 70</file>
+        </tool>
+      </inputs>
     </file>
     <file>
       <name>$PROJ_DIR$\Library\CMSIS\startup_stm32f411xe.s</name>
       <outputs>
         <tool>
           <name>AARM</name>
-          <file> 71</file>
+          <file> 36</file>
         </tool>
       </outputs>
     </file>
@@ -106,22 +121,22 @@
       <name>$PROJ_DIR$\Library\CMSIS\system_stm32f4xx.c</name>
       <outputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 43</file>
+          <name>ICCARM</name>
+          <file> 17</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 52</file>
+          <name>BICOMP</name>
+          <file> 8</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 14 10 8 44 54 15</file>
+          <name>ICCARM</name>
+          <file> 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 55 51 49 9 19 56</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 14 10 8 44 54 15</file>
+          <name>BICOMP</name>
+          <file> 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 55 51 49 9 19 56</file>
         </tool>
       </inputs>
     </file>
@@ -129,22 +144,22 @@
       <name>$PROJ_DIR$\Library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c</name>
       <outputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 59</file>
+          <name>ICCARM</name>
+          <file> 18</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 53</file>
+          <name>BICOMP</name>
+          <file> 24</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 8 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 14 10 44 54 15</file>
+          <name>ICCARM</name>
+          <file> 49 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 55 51 9 19 56</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 8 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 14 10 44 54 15</file>
+          <name>BICOMP</name>
+          <file> 49 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 55 51 9 19 56</file>
         </tool>
       </inputs>
     </file>
@@ -152,22 +167,22 @@
       <name>$PROJ_DIR$\Library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c</name>
       <outputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 67</file>
+          <name>ICCARM</name>
+          <file> 40</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 36</file>
+          <name>BICOMP</name>
+          <file> 32</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 10 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 14 8 44 54 15</file>
+          <name>ICCARM</name>
+          <file> 51 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 55 49 9 19 56</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 10 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 14 8 44 54 15</file>
+          <name>BICOMP</name>
+          <file> 51 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 55 49 9 19 56</file>
         </tool>
       </inputs>
     </file>
@@ -175,22 +190,22 @@
       <name>$PROJ_DIR$\User\ISR\stm32f4xx_it.c</name>
       <outputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 40</file>
+          <name>ICCARM</name>
+          <file> 76</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 32</file>
+          <name>BICOMP</name>
+          <file> 5</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 18 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 14 10 8 44 54 15 16 41 12 13 19</file>
+          <name>ICCARM</name>
+          <file> 59 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 55 51 49 9 19 56 57 6 53 54 60</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 18 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 14 10 8 44 54 15 16 41 12 13 19</file>
+          <name>BICOMP</name>
+          <file> 59 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 55 51 49 9 19 56 57 6 53 54 60</file>
         </tool>
       </inputs>
     </file>
@@ -198,22 +213,22 @@
       <name>$PROJ_DIR$\User\USART\stm32f4xx_usart.c</name>
       <outputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 39</file>
+          <name>ICCARM</name>
+          <file> 3</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 38</file>
+          <name>BICOMP</name>
+          <file> 4</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 44 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 14 10 8 54 15</file>
+          <name>ICCARM</name>
+          <file> 9 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 55 51 49 19 56</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 44 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 14 10 8 54 15</file>
+          <name>BICOMP</name>
+          <file> 9 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 55 51 49 19 56</file>
         </tool>
       </inputs>
     </file>
@@ -221,22 +236,22 @@
       <name>$PROJ_DIR$\User\LED_Control\LED_Con.c</name>
       <outputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 69</file>
+          <name>ICCARM</name>
+          <file> 73</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 28</file>
+          <name>BICOMP</name>
+          <file> 34</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 35 14 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 10 8 44 54 15</file>
+          <name>ICCARM</name>
+          <file> 2 55 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 51 49 9 19 56</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 35 14 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 10 8 44 54 15</file>
+          <name>BICOMP</name>
+          <file> 2 55 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 51 49 9 19 56</file>
         </tool>
       </inputs>
     </file>
@@ -244,22 +259,22 @@
       <name>$PROJ_DIR$\User\USART\USART.c</name>
       <outputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 33</file>
+          <name>ICCARM</name>
+          <file> 1</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 37</file>
+          <name>BICOMP</name>
+          <file> 0</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 18 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 14 10 8 44 54 15</file>
+          <name>ICCARM</name>
+          <file> 59 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 55 51 49 9 19 56</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 18 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 14 10 8 44 54 15</file>
+          <name>BICOMP</name>
+          <file> 59 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 55 51 49 9 19 56</file>
         </tool>
       </inputs>
     </file>
@@ -267,22 +282,22 @@
       <name>$PROJ_DIR$\User\USART\USART_Data.c</name>
       <outputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 50</file>
+          <name>ICCARM</name>
+          <file> 11</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 46</file>
+          <name>BICOMP</name>
+          <file> 15</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 14 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 10 8 44 54 15 19 18 12</file>
+          <name>ICCARM</name>
+          <file> 55 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 51 49 9 19 56 60 59 53</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 14 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 10 8 44 54 15 19 18 12</file>
+          <name>BICOMP</name>
+          <file> 55 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 51 49 9 19 56 60 59 53</file>
         </tool>
       </inputs>
     </file>
@@ -290,22 +305,22 @@
       <name>$PROJ_DIR$\User\WWDG\stm32f4xx_wwdg.c</name>
       <outputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 48</file>
+          <name>ICCARM</name>
+          <file> 20</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 55</file>
+          <name>BICOMP</name>
+          <file> 13</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 47 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 14 10 8 44 54 15</file>
+          <name>ICCARM</name>
+          <file> 12 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 55 51 49 9 19 56</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 47 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 14 10 8 44 54 15</file>
+          <name>BICOMP</name>
+          <file> 12 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 55 51 49 9 19 56</file>
         </tool>
       </inputs>
     </file>
@@ -313,22 +328,22 @@
       <name>$PROJ_DIR$\User\main.c</name>
       <outputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 66</file>
+          <name>ICCARM</name>
+          <file> 14</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 49</file>
+          <name>BICOMP</name>
+          <file> 31</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 18 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 14 10 8 44 54 15 13 12 19 47 73 72 74</file>
+          <name>ICCARM</name>
+          <file> 59 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 55 51 49 9 19 56 54 53 60 12 38 37 69</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 18 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 14 10 8 44 54 15 13 12 19 47 73 72 74</file>
+          <name>BICOMP</name>
+          <file> 59 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 55 51 49 9 19 56 54 53 60 12 38 37 69</file>
         </tool>
       </inputs>
     </file>
@@ -336,37 +351,22 @@
       <name>$PROJ_DIR$\User\misc.c</name>
       <outputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 58</file>
+          <name>ICCARM</name>
+          <file> 16</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 51</file>
+          <name>BICOMP</name>
+          <file> 23</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 54 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 14 10 8 44 15</file>
-        </tool>
-        <tool>
           <name>ICCARM</name>
-          <file> 54 4 0 62 70 63 68 76 65 31 64 2 30 29 1 3 5 14 10 8 44 15</file>
+          <file> 19 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 55 51 49 9 56</file>
         </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Debug\Exe\DustSensor_NIDS.out</name>
-      <outputs>
         <tool>
-          <name>OBJCOPY</name>
-          <file> 34</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ILINK</name>
-          <file> 42 28 49 51 71 53 32 36 38 55 52 37 46 45 60 61 75</file>
+          <name>BICOMP</name>
+          <file> 19 46 41 27 35 28 33 71 30 75 29 43 72 74 42 44 45 55 51 49 9 56</file>
         </tool>
       </inputs>
     </file>

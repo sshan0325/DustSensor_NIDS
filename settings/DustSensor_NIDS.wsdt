@@ -26,11 +26,11 @@
         
         
       <ColumnWidth0>482</ColumnWidth0><ColumnWidth1>80</ColumnWidth1><ColumnWidth2>724</ColumnWidth2><ColumnWidth3>321</ColumnWidth3></Find-in-Files>
-    <TerminalIO/><Select-Ambiguous-Definitions><ColumnWidth0>664</ColumnWidth0><ColumnWidth1>94</ColumnWidth1><ColumnWidth2>1138</ColumnWidth2></Select-Ambiguous-Definitions></Static>
+    <TerminalIO/><Select-Ambiguous-Definitions><ColumnWidth0>664</ColumnWidth0><ColumnWidth1>94</ColumnWidth1><ColumnWidth2>1138</ColumnWidth2></Select-Ambiguous-Definitions><Debug-Log><ColumnWidth0>19</ColumnWidth0><ColumnWidth1>1862</ColumnWidth1></Debug-Log></Static>
     <Windows>
       
       
-    <Wnd1>
+    <Wnd0>
         <Tabs>
           <Tab>
             <Identity>TabID-32319-11727</Identity>
@@ -38,11 +38,11 @@
             <Factory>Workspace</Factory>
             <Session>
               
-            <NodeDict><ExpandedNode>DustSensor_NIDS</ExpandedNode><ExpandedNode>DustSensor_NIDS/CMSIS</ExpandedNode><ExpandedNode>DustSensor_NIDS/Library</ExpandedNode><ExpandedNode>DustSensor_NIDS/Library/gpio</ExpandedNode><ExpandedNode>DustSensor_NIDS/Output</ExpandedNode><ExpandedNode>DustSensor_NIDS/User</ExpandedNode><ExpandedNode>DustSensor_NIDS/User/ISR</ExpandedNode><ExpandedNode>DustSensor_NIDS/User/USART</ExpandedNode><ExpandedNode>DustSensor_NIDS/User/inc</ExpandedNode></NodeDict></Session>
+            <NodeDict><ExpandedNode>DustSensor_NIDS</ExpandedNode><ExpandedNode>DustSensor_NIDS/User</ExpandedNode><ExpandedNode>DustSensor_NIDS/User/ISR</ExpandedNode><ExpandedNode>DustSensor_NIDS/User/LED</ExpandedNode><ExpandedNode>DustSensor_NIDS/User/USART</ExpandedNode><ExpandedNode>DustSensor_NIDS/User/inc</ExpandedNode></NodeDict></Session>
           </Tab>
         </Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd1><Wnd4>
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd3>
         <Tabs>
           <Tab>
             <Identity>TabID-1454-15580</Identity>
@@ -56,23 +56,23 @@
             <Factory>Find-in-Files</Factory>
             <Session/>
           </Tab>
-        <Tab><Identity>TabID-24758-6631</Identity><TabName>Ambiguous Definitions</TabName><Factory>Select-Ambiguous-Definitions</Factory><Session/></Tab></Tabs>
+        <Tab><Identity>TabID-24758-6631</Identity><TabName>Ambiguous Definitions</TabName><Factory>Select-Ambiguous-Definitions</Factory><Session/></Tab><Tab><Identity>TabID-7803-5773</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab></Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd4></Windows>
+      <SelectedTab>0</SelectedTab></Wnd3></Windows>
     <Editor>
       
       
       
       
       
-    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\User\inc\USART_Data.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>429</SelStart2><SelEnd2>429</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\User\USART\USART_Data.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>328</YPos2><SelStart2>11433</SelStart2><SelEnd2>11433</SelEnd2></Tab><ActiveTab>1</ActiveTab></Pane><Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\User\ISR\stm32f4xx_it.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>176</YPos2><SelStart2>5208</SelStart2><SelEnd2>5208</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\User\main.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>21</YPos2><SelStart2>1388</SelStart2><SelEnd2>1388</SelEnd2></Tab><ActiveTab>1</ActiveTab></Pane><ActivePane>1</ActivePane><Sizes><Pane><X>457877</X><Y>1000000</Y></Pane><Pane><X>542122</X><Y>1000000</Y></Pane></Sizes><SplitMode>4</SplitMode></Editor>
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\User\inc\USART_Data.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>0</SelStart2><SelEnd2>0</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\User\USART\USART_Data.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>0</SelStart2><SelEnd2>0</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\User\USART\USART.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>117</YPos2><SelStart2>0</SelStart2><SelEnd2>0</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\User\inc\stm32f4xx_it.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>0</SelStart2><SelEnd2>0</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\User\inc\USART.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>676</SelStart2><SelEnd2>676</SelEnd2></Tab><ActiveTab>4</ActiveTab></Pane><ActivePane>0</ActivePane><Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\User\ISR\stm32f4xx_it.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>0</SelStart2><SelEnd2>0</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\User\main.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>663</SelStart2><SelEnd2>663</SelEnd2></Tab><ActiveTab>1</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Library\CMSIS\stm32f4xx.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>2275</YPos2><SelStart2>170598</SelStart2><SelEnd2>170602</SelEnd2></Tab></Pane><Sizes><Pane><X>457877</X><Y>1000000</Y></Pane><Pane><X>542122</X><Y>1000000</Y></Pane></Sizes><SplitMode>4</SplitMode></Editor>
     <Positions>
       
       
       
       
       
-    <Top><Row0><Sizes><Toolbar-02A04378><key>iaridepm.enu1</key></Toolbar-02A04378></Sizes></Row0></Top><Left><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>719</Bottom><Right>343</Right><x>-2</x><y>-2</y><xscreen>48</xscreen><yscreen>161</yscreen><sizeHorzCX>50847</sizeHorzCX><sizeHorzCY>167708</sizeHorzCY><sizeVertCX>365466</sizeVertCX><sizeVertCY>751042</sizeVertCY></Rect></Wnd1></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd4><Rect><Top>-2</Top><Left>-2</Left><Bottom>196</Bottom><Right>946</Right><x>-2</x><y>-2</y><xscreen>948</xscreen><yscreen>198</yscreen><sizeHorzCX>1004237</sizeHorzCX><sizeHorzCY>206250</sizeHorzCY><sizeVertCX>50847</sizeVertCX><sizeVertCY>167708</sizeVertCY></Rect></Wnd4></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+    <Top><Row0><Sizes><Toolbar-00E82CF8><key>iaridepm.enu1</key></Toolbar-00E82CF8></Sizes></Row0></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>622</Bottom><Right>343</Right><x>-2</x><y>-2</y><xscreen>48</xscreen><yscreen>161</yscreen><sizeHorzCX>25000</sizeHorzCX><sizeHorzCY>164959</sizeHorzCY><sizeVertCX>179688</sizeVertCX><sizeVertCY>639344</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>309</Bottom><Right>1922</Right><x>-2</x><y>-2</y><xscreen>1924</xscreen><yscreen>311</yscreen><sizeHorzCX>1002083</sizeHorzCX><sizeHorzCY>318648</sizeHorzCY><sizeVertCX>25000</sizeVertCX><sizeVertCY>164959</sizeVertCY></Rect></Wnd3></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
   </Desktop>
 </Workspace>
 
