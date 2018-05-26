@@ -263,7 +263,19 @@
   <group>
     <name>User</name>
     <group>
+      <name>I2C</name>
+      <file>
+        <name>$PROJ_DIR$\User\I2C\I2C.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\User\I2C\stm32f4xx_i2c.c</name>
+      </file>
+    </group>
+    <group>
       <name>inc</name>
+      <file>
+        <name>$PROJ_DIR$\User\inc\I2C.h</name>
+      </file>
       <file>
         <name>$PROJ_DIR$\User\inc\LED_Con.h</name>
       </file>

@@ -6,6 +6,8 @@
 #include "stm32f4xx_wwdg.h"
 #include "stdio.h"
 #include "stm32f4xx.h"
+#include "I2C.h"
+#include "stm32f4xx_i2c.h"
 
 extern uint8_t aTxBuffer[];
 extern uint8_t aRxBuffer[];
@@ -16,6 +18,8 @@ extern uint8_t aRxBuffer [BUFFERSIZE];
 extern unsigned char Tx_Flag;
 extern unsigned char Tx_Flag_485;
 
+//#define SLAVE_ADDRESS 0x5A // the slave address (example)
+#define SLAVE_ADDRESS 0x44 // the slave address (example)
 
 static __IO uint32_t TimingDelay;
 
@@ -38,8 +42,24 @@ PUTCHAR_PROTOTYPE
 void main(void)
 {
   int temp=0;
+  int temp1,temp2;
   SYsInit();
+  uint8_t received_data[9];
   
+  printf ("System Init\r\n");   
+  
+
+  I2C_StretchClockCmd(I2C1, DISABLE);
+  I2C_start(I2C1, SLAVE_ADDRESS<<1, I2C_Direction_Transmitter); // start a transmission in Master receiver mode
+  
+  I2C_SendData(I2C1, 0x20);  
+  I2C_SendData(I2C1, 0x32);  
+  for (temp1=0 ; temp1<100 ; temp1++)
+  {
+    temp2++;
+  }      
+  I2C_stop(I2C1);
+        
   while(1)
   {
     //////////// DUST Sensor Data Read & 485 Tx//////////////////
@@ -48,16 +68,45 @@ void main(void)
     RS485DataProcess();
     /////////////////////////////////////////////////////////////
     temp++;
-    
-    if (temp>1000000)
+    if (0x44 == SLAVE_ADDRESS)
     {
-      temp=0;
-      GPIO_ToggleBits(GPIOA, LED3_PIN);
-      printf ("AAAA\r\n");      
-    }    
+        if (temp>10000000)
+        {
+          temp=0;
+          GPIO_ToggleBits(GPIOA, LED3_PIN);
+          printf ("AAAA\r\n");   
+          
+          I2C_start(I2C1, SLAVE_ADDRESS<<1, I2C_Direction_Transmitter); // start a transmission in Master receiver mode
+          I2C_SendData(I2C1, 0xE0);  
+          I2C_SendData(I2C1, 0x00);  
+          for (temp1=0 ; temp1<100 ; temp1++)
+          {
+            temp2++;
+          }      
+          //I2C_stop(I2C1);      
+          
+          for (temp1=0 ; temp1<1000 ; temp1++)
+          {
+            temp2++;
+          }      
+          
+          I2C_start(I2C1, SLAVE_ADDRESS<<1, I2C_Direction_Receiver); // start a transmission in Master receiver mode
+          //I2C_SendData(I2C1, 0x0);  
+          received_data[0] = I2C_read_ack(I2C1); // read one byte and request another byte
+          received_data[1] = I2C_read_ack(I2C1); // read one byte and request another byte
+          received_data[2] = I2C_read_ack(I2C1); // read one byte and request another byte
+          received_data[3] = I2C_read_ack(I2C1); // read one byte and request another byte
+          received_data[4] = I2C_read_ack(I2C1); // read one byte and request another byte
+          received_data[5] = I2C_read_ack(I2C1); // read one byte and request another byte
+          //received_data[6] = I2C_read_ack(I2C1); // read one byte and request another byte
+          //received_data[7] = I2C_read_ack(I2C1); // read one byte and request another byte
+          //received_data[8] = I2C_read_ack(I2C1); // read one byte and don't request another byte, stop transmission      
+          I2C_stop(I2C1);
+          
+          printf ("%d, %d, %d, %d, %d, %d, %d, %d, %d \r\n",received_data[0],received_data[1],received_data[2],received_data[3],received_data[4],received_data[5],received_data[6],received_data[7],received_data[8]);            
+        }
+    }
   }
-  
-
 }
 
 void SYsInit(void)
@@ -67,6 +116,7 @@ void SYsInit(void)
   USART2_Config();
   SysTickConfig();  
   USART1_Config(115200);
+  init_I2C1();
 }
   
 
